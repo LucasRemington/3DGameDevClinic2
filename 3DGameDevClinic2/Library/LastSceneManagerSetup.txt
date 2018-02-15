@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/RealScene.unity
+- path: Assets/Scenes/LucasTest.unity
   isLoaded: 1
   isActive: 1
