@@ -1,0 +1,107 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerMovement : MonoBehaviour {
+
+    public float speed;
+    public Score_Difficulty score;
+    private float gravity = 20.0f;
+    private CharacterController controller;
+    private Vector3 moveV;
+    private float vertVelocity;
+    private float jumpForce = 10.0f;
+    private bool isDead = false;
+    private Animator animator;
+    private int lane;
+    private float height;
+
+
+
+    void Start () {
+        controller = GetComponent<CharacterController>();
+        lane = 0;
+        animator = GetComponent<Animator>();
+	}
+
+    void Update() {
+        if (isDead == true) { 
+            return;
+        }
+        
+        moveV = Vector3.zero;
+        if (controller.isGrounded){
+            vertVelocity = -0.5f;
+            if (Input.GetButtonDown("Jump"))
+            {
+                vertVelocity = jumpForce;
+                //animator.SetBool("jumping", true);
+                Invoke("stopJumping", 0.1f);
+            }
+        }
+        else{
+            vertVelocity -= gravity * Time.deltaTime;
+        }
+        moveV.y = vertVelocity;
+        moveV.z = speed;
+        controller.Move(moveV * Time.deltaTime);
+
+        if (Input.GetButtonDown("Slide"))
+        {
+            controller.height = 0.0f;
+            //animator.SetBool("sliding", true);
+            Invoke("stopSliding", 1.0f);
+        }
+        if (Input.GetButtonDown("Left"))
+        {
+            if(lane > -1)
+            {
+                lane--;
+            }
+        }
+        if (Input.GetButtonDown("Right"))
+        {
+            if (lane < 1)
+            {
+                lane++;
+            }
+        }
+
+        Vector3 newposition = transform.position;
+        newposition.x = lane;
+        transform.position = newposition;
+        transform.Rotate(Vector3.up, 0.0f);
+    }
+
+    public void SpeedLevel(float modifier)
+    {
+        speed = 3.0f + modifier;
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.gameObject.tag == "Obstacle")
+        {
+            //animator.SetBool("death", true);
+            Invoke("Death", 2.0f);
+        }
+    }
+
+    void stopJumping()
+    {
+        //animator.SetBool("jumping", false);
+    }
+
+    void stopSliding()
+    {
+        //animator.SetBool("sliding", false);
+        controller.height = 1.5f;
+    }
+
+    void Death()
+    {
+        //animator.SetBool("death", false);
+        isDead = true;
+        score.OnDeath();
+    }
+}
