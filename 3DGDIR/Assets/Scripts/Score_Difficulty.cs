@@ -9,7 +9,7 @@ public class Score_Difficulty : MonoBehaviour {
     public DeathMenu dm;
     private float score = 0.0f;
     private int difficulty = 1;
-    private int maxDiff = 10;
+    private int maxDiff = 6;
     private int scoretoNext = 10;
     public Text scoreText;
     private bool dead = false;

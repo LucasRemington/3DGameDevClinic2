@@ -12,13 +12,14 @@ public class PathSpawn : MonoBehaviour {
     private float safe = 35.0f;
     private int pathsAlive = 5;
     private List<GameObject> activePaths;
+    private int start = 0;
 
 	void Start () {
         activePaths = new List<GameObject>();
         playerT = GameObject.FindGameObjectWithTag("Player").transform;
         for (int i = 0; i < pathsAlive; i++)
         {
-            SpawnPath();
+                SpawnPath();
         }
 	}
 	
@@ -33,13 +34,24 @@ public class PathSpawn : MonoBehaviour {
 
     void SpawnPath()
     {
-        int randomIndex = Random.Range(0, Paths.Length);
+        int randomIndex = Random.Range(1, Paths.Length);
         GameObject go;
-        go = Instantiate (Paths[randomIndex]) as GameObject;
-        go.transform.SetParent(transform);
-        go.transform.position = Vector3.forward * spawnZ;
-        spawnZ += pathLength;
-        activePaths.Add(go);
+        if (start < 1)
+        {
+            go = Instantiate(Paths[0]) as GameObject;
+            go.transform.SetParent(transform);
+            go.transform.position = Vector3.forward * spawnZ;
+            spawnZ += pathLength;
+            activePaths.Add(go);
+            start++;
+        }
+        else{
+            go = Instantiate(Paths[randomIndex]) as GameObject;
+            go.transform.SetParent(transform);
+            go.transform.position = Vector3.forward * spawnZ;
+            spawnZ += pathLength;
+            activePaths.Add(go);
+        }
     }
     void DeletePath()
     {

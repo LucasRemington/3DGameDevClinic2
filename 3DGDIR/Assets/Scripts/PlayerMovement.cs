@@ -35,7 +35,7 @@ public class PlayerMovement : MonoBehaviour {
             if (Input.GetButtonDown("Jump"))
             {
                 vertVelocity = jumpForce;
-                //animator.SetBool("jumping", true);
+                animator.SetBool("Jumping", true);
                 Invoke("stopJumping", 0.1f);
             }
         }
@@ -49,7 +49,7 @@ public class PlayerMovement : MonoBehaviour {
         if (Input.GetButtonDown("Slide"))
         {
             controller.height = 0.0f;
-            //animator.SetBool("sliding", true);
+            animator.SetBool("Sliding", true);
             Invoke("stopSliding", 1.0f);
         }
         if (Input.GetButtonDown("Left"))
@@ -75,32 +75,32 @@ public class PlayerMovement : MonoBehaviour {
 
     public void SpeedLevel(float modifier)
     {
-        speed = 3.0f + modifier;
+        speed = 3.0f + (modifier -0.5f);
     }
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
         if (hit.gameObject.tag == "Obstacle")
         {
-            //animator.SetBool("death", true);
+            animator.SetBool("Death", true);
             Invoke("Death", 2.0f);
         }
     }
 
     void stopJumping()
     {
-        //animator.SetBool("jumping", false);
+        animator.SetBool("Jumping", false);
     }
 
     void stopSliding()
     {
-        //animator.SetBool("sliding", false);
+        animator.SetBool("Sliding", false);
         controller.height = 1.5f;
     }
 
     void Death()
     {
-        //animator.SetBool("death", false);
+        animator.SetBool("Death", false);
         isDead = true;
         score.OnDeath();
     }
