@@ -57,6 +57,7 @@ public class PlayerMovement : MonoBehaviour {
             if(lane > -1)
             {
                 lane--;
+				animator.SetTrigger("ShiftLeft");
             }
         }
         if (Input.GetButtonDown("Right"))
@@ -64,6 +65,7 @@ public class PlayerMovement : MonoBehaviour {
             if (lane < 1)
             {
                 lane++;
+				animator.SetTrigger("ShiftRight");
             }
         }
 
@@ -80,11 +82,11 @@ public class PlayerMovement : MonoBehaviour {
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if (hit.gameObject.tag == "Obstacle")
+        /*if (hit.gameObject.tag == "Obstacle")
         {
             animator.SetBool("Death", true);
             Invoke("Death", 2.0f);
-        }
+        }*/
     }
 
     void stopJumping()
