@@ -17,16 +17,21 @@ public class Score_Difficulty : MonoBehaviour {
 	void Start () {
 		
 	}
-	
-	void Update () {
-        if (dead == true){
+
+    void Update()
+    {
+        if (dead == true)
+        {
             return;
         }
+        if (player.outerDelay == 1)
+        {
 
-        if (score >= scoretoNext) LevelUp();
-        score += Time.deltaTime * difficulty;
-        scoreText.text = ((int)score).ToString();
-	}
+            if (score >= scoretoNext) LevelUp();
+            score += Time.deltaTime * difficulty;
+            scoreText.text = ((int)score).ToString();
+        }
+    }
 
     void LevelUp()
     {
