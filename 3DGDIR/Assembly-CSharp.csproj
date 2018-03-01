@@ -54,6 +54,7 @@
      <Compile Include="Assets\Art_Sound\LDRAssets\Scripts\Float.cs" />
      <Compile Include="Assets\Scripts\Camera.cs" />
      <Compile Include="Assets\Scripts\DeathMenu.cs" />
+     <Compile Include="Assets\Scripts\Firewal.cs" />
      <Compile Include="Assets\Scripts\MainMenu.cs" />
      <Compile Include="Assets\Scripts\PathSpawn.cs" />
      <Compile Include="Assets\Scripts\PlayerMovement.cs" />

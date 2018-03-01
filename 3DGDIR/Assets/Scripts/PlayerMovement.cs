@@ -35,9 +35,18 @@ public class PlayerMovement : MonoBehaviour {
             return;
         }
         if (Time.time > 2.0f) delay = 1;
+
+		if (animator.GetBool ("Death") == true) {
+			Invoke ("Death", 2.0f);
+			animator.SetBool("Jumping", false);
+			animator.SetBool("Sliding", false);
+			speed = 0f;
+			jumpForce = 0;
+		}
         
         if (delay == 1) {
-            moveV = Vector3.zero;
+			animator.SetTrigger("InstantRun");
+			moveV = Vector3.zero;
             if (controller.isGrounded){
                 vertVelocity = -0.5f;
                 if (Input.GetButtonDown("Jump"))
@@ -60,7 +69,7 @@ public class PlayerMovement : MonoBehaviour {
                 animator.SetBool("Sliding", true);
                 Invoke("stopSliding", 1.0f);
             }
-            if (Input.GetButtonDown("Left"))
+			if (Input.GetButtonDown("Left") && animator.GetBool ("Death") == false)
             {
                 if(lane > -1)
                 {
@@ -68,7 +77,7 @@ public class PlayerMovement : MonoBehaviour {
 				    animator.SetTrigger("ShiftLeft");
                 }
             }
-            if (Input.GetButtonDown("Right"))
+			if (Input.GetButtonDown("Right") && animator.GetBool ("Death") == false)
             {
                 if (lane < 1)
                 {
@@ -94,8 +103,11 @@ public class PlayerMovement : MonoBehaviour {
         if (hit.gameObject.tag == "Obstacle")
         {
             animator.SetBool("Death", true);
-            Invoke("Death", 2.0f);
         }
+		if (hit.gameObject.tag == "Wall" && animator.GetBool ("Sliding") == false)
+		{
+			animator.SetBool("Death", true);
+		}
     }
 
     void stopJumping()
@@ -109,7 +121,8 @@ public class PlayerMovement : MonoBehaviour {
         coll.enabled = true;
     }
 
-    void Death()
+    
+	void Death()
     {
         animator.SetBool("Death", false);
         isDead = true;

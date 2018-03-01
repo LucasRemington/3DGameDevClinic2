@@ -6,7 +6,7 @@ public class Float : MonoBehaviour
 {
 	public float spinSpeed = 10f;
 	float originalY;
-	public float floatStrength = 1; 
+	private float floatStrength = 0.1f; 
 	public bool yesRotate;
 
 	void Start()
